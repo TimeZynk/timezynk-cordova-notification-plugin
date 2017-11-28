@@ -3,7 +3,7 @@
 
     <name>TimeZynk Notification Plugin</name>
     <description>Handle GCM and APNS notifications</description>
-    <license>Copyright TimeZynk AB 2016</license>
+    <license>Copyright TimeZynk AB 2017</license>
 
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
