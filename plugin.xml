@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="timezynk-cordova-notification-plugin" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <name>TimeZynk Notification Plugin</name>
+    <description>Handle GCM and APNS notifications</description>
+    <license>Copyright TimeZynk AB 2016</license>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="TZNotification">
+                <param name="ios-package" value="TZNotification"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/TZNotification.h"/>
+        <source-file src="src/ios/TZNotification.m" compiler-flags="-fno-objc-arc" />
+
+        <header-file src="src/ios/AppDelegate+TZNotification.h"/>
+        <source-file src="src/ios/AppDelegate+TZNotification.m"/>
+
+        <header-file src="src/ios/NSData+Conversion.h"/>
+        <source-file src="src/ios/NSData+Conversion.m"/>
+    </platform>
+
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="TZNotification">
+                <param name="android-package" value="com.timezynk.cordova.notification.GCMPlugin"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+            <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"
+                android:protectionLevel="signature" />
+            <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver
+                android:name="com.google.android.gms.gcm.GcmReceiver"
+                android:exported="true"
+                android:permission="com.google.android.c2dm.permission.SEND" >
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <category android:name="$PACKAGE_NAME" />
+                </intent-filter>
+            </receiver>
+            <service android:name="com.timezynk.cordova.notification.GCMIntentService"
+                     android:exported="false">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                </intent-filter>
+            </service>
+            <service
+                android:name="com.timezynk.cordova.notification.GCMInstanceIDService"
+                android:exported="false">
+                <intent-filter>
+                    <action android:name="com.google.android.gms.iid.InstanceID"/>
+                </intent-filter>
+            </service>
+            <service
+                android:name="com.timezynk.cordova.notification.GCMRegistrationService"
+                android:exported="false">
+            </service>
+        </config-file>
+
+        <source-file src="src/android/GCMIntentService.java" target-dir="src/com/timezynk/cordova/notification" />
+        <source-file src="src/android/GCMInstanceIDService.java" target-dir="src/com/timezynk/cordova/notification" />
+        <source-file src="src/android/GCMRegistrationService.java" target-dir="src/com/timezynk/cordova/notification" />
+        <source-file src="src/android/GCMPlugin.java" target-dir="src/com/timezynk/cordova/notification" />
+
+        <framework src="com.google.android.gms:play-services-gcm:7.5.0"/>
+        <framework src="com.android.support:support-v4:21.0.0"/>
+        <framework src="com.android.support:appcompat-v7:21.0.0"/>
+    </platform>
+
+</plugin>
