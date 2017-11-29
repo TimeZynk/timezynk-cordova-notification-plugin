@@ -62,7 +62,9 @@ public class GCMIntentService extends GcmListenerService {
                 .setContentText(getContent(params));
 
         // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, com.timezynk.mobile.MainActivity.class);
+        PackageManager pm = this.getPackageManager();
+        String packageName = this.getApplication().getPackageName();
+        Intent resultIntent = pm.getLaunchIntentForPackage(packageName);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         for (String key : params.keySet()) {
             String o = params.getString(key);
@@ -76,7 +78,7 @@ public class GCMIntentService extends GcmListenerService {
         // your application to the Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(com.timezynk.mobile.MainActivity.class);
+        stackBuilder.addParentStack(resultIntent.resolveActivity(pm));
         // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
