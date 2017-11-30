@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="timezynk-cordova-notification-plugin" version="1.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="timezynk-cordova-notification-plugin" version="1.1.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <name>TimeZynk Notification Plugin</name>
-    <description>Handle GCM and APNS notifications</description>
+    <description>Handle FCM and APNS notifications</description>
     <license>Copyright TimeZynk AB 2017</license>
 
     <platform name="ios">
@@ -30,43 +30,19 @@
             </feature>
         </config-file>
 
-        <config-file target="AndroidManifest.xml" parent="/manifest">
-            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-            <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-            <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"
-                android:protectionLevel="signature" />
-            <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
-        </config-file>
-
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <receiver
-                android:name="com.google.android.gms.gcm.GcmReceiver"
-                android:exported="true"
-                android:permission="com.google.android.c2dm.permission.SEND" >
+            <service
+                android:name="com.timezynk.cordova.notification.FCMListenerService">
                 <intent-filter>
-                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                    <category android:name="$PACKAGE_NAME" />
-                </intent-filter>
-            </receiver>
-            <service android:name="com.timezynk.cordova.notification.GCMIntentService"
-                     android:exported="false">
-                <intent-filter>
-                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 </intent-filter>
             </service>
             <service
-                android:name="com.timezynk.cordova.notification.GCMInstanceIDService"
-                android:exported="false">
+                android:name="com.timezynk.cordova.notification.InstanceIDListenerService"
+            >
                 <intent-filter>
-                    <action android:name="com.google.android.gms.iid.InstanceID"/>
+                    <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
                 </intent-filter>
-            </service>
-            <service
-                android:name="com.timezynk.cordova.notification.GCMRegistrationService"
-                android:exported="false">
             </service>
         </config-file>
 
@@ -75,9 +51,9 @@
         <source-file src="src/android/GCMRegistrationService.java" target-dir="src/com/timezynk/cordova/notification" />
         <source-file src="src/android/GCMPlugin.java" target-dir="src/com/timezynk/cordova/notification" />
 
-        <framework src="com.google.android.gms:play-services-gcm:7.5.0"/>
-        <framework src="com.android.support:support-v4:21.0.0"/>
-        <framework src="com.android.support:appcompat-v7:21.0.0"/>
+        <framework src="com.google.firebase:firebase-messaging:9.0.0"/>
+        <framework src="com.android.support:support-compat:27.0.2"/>
+        <framework src="com.android.support:appcompat-v7:27.0.2"/>
     </platform>
 
 </plugin>

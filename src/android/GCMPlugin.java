@@ -8,9 +8,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class GCMPlugin extends CordovaPlugin {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -32,12 +30,9 @@ public class GCMPlugin extends CordovaPlugin {
         if (action.equals("register")) {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-                    register(callbackContext);
+                    getToken(callbackContext);
                 }
             });
-            return true;
-        } else if (action.equals("unregister")) {
-            unregister(callbackContext);
             return true;
         } else if (action.equals("getPendingNotifications")) {
             cordova.getThreadPool().execute(new Runnable() {
@@ -91,16 +86,6 @@ public class GCMPlugin extends CordovaPlugin {
         ongoingContext = null;
     }
 
-    public void onRegistrationError(String errorId) {
-        if (ongoingContext == null) {
-            Log.w(TAG, "ongoingContext is null when getting error response");
-            return;
-        }
-
-        ongoingContext.error(errorId);
-        ongoingContext = null;
-    }
-
     public void onMessage(Bundle message) throws JSONException {
         Log.v(TAG, "Recieved message: " + message + ", context: " + listenContext);
         if (listenContext == null) {
@@ -113,46 +98,16 @@ public class GCMPlugin extends CordovaPlugin {
         listenContext.sendPluginResult(result);
     }
 
-    private void register(CallbackContext context) {
-        if (checkPlayServices()) {
-            Log.i(TAG, "Google Play Services OK, launching GCMRegistrationService");
-            ongoingContext = context;
-            // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(cordova.getActivity(), GCMRegistrationService.class);
-            intent.putExtra("gcmSenderId", preferences.getString("GcmSenderId", ""));
-            Activity a = cordova.getActivity();
-            a.startService(intent);
-        } else {
-            context.error("Google Play Services not found");
-        }
-    }
-
-    /**
-     * Check the device to make sure it has the Google Play Services APK. If
-     * it doesn't, display a dialog that allows users to download the APK from
-     * the Google Play Store or enable it in the device's system settings.
-     */
-    private boolean checkPlayServices() {
-        try {
-            int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(cordova.getActivity());
-            if (resultCode != ConnectionResult.SUCCESS) {
-                if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                    GooglePlayServicesUtil.getErrorDialog(resultCode, cordova.getActivity(),
-                            PLAY_SERVICES_RESOLUTION_REQUEST).show();
-                } else {
-                    Log.i(TAG, "This device is not supported.");
-                }
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            Log.e(TAG, "Exception when checking for google play services", e);
-        }
-        return false;
-    }
-
-    private void unregister(CallbackContext context) throws JSONException {
+    private void getToken(CallbackContext context) {
+        Log.i(TAG, "Google Play Services OK, finding FCM token");
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         JSONObject response = new JSONObject();
+        try {
+            response.put("platform", "android");
+            response.put("registrationId", refreshedToken);
+        } catch (JSONException e) {
+            Log.w(TAG, "failed to construct JSON response", e);
+        }
         context.success(response);
     }
 
