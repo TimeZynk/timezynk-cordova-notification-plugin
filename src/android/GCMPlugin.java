@@ -103,9 +103,9 @@ public class GCMPlugin extends CordovaPlugin {
     }
 
     private void getToken(CallbackContext context) {
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        if (refreshedToken !== null) {
-            this.onRegistrationResponse(refreshedToken, context);
+        String token = FirebaseInstanceId.getInstance().getToken();
+        if (token != null) {
+            this.onRegistrationResponse(token, context);
         } else {
             this.ongoingContext = context;
         }
