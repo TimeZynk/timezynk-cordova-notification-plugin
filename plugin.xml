@@ -50,9 +50,10 @@
         <source-file src="src/android/GCMPlugin.java" target-dir="src/com/timezynk/cordova/notification" />
         <source-file src="src/android/InstanceIDListenerService.java" target-dir="src/com/timezynk/cordova/notification" />
 
-        <framework src="com.google.firebase:firebase-messaging:9.0.0"/>
-        <framework src="com.android.support:support-v4:+"/>
-        <framework src="com.android.support:appcompat-v7:+"/>
+        <framework src="com.google.gms:google-services:3.1.1"/>
+        <framework src="com.google.firebase:firebase-messaging:11.6.2"/>
+        <framework src="com.android.support:appcompat-v7:26.+"/>
+        <framework src="push.gradle" custom="true" type="gradleReference"/>
     </platform>
 
 </plugin>
