@@ -5,6 +5,12 @@
     <description>Handle FCM and APNS notifications</description>
     <license>Copyright TimeZynk AB 2017</license>
 
+    <engines>
+        <engine name="cordova" version=">=7.1.0"/>
+        <engine name="cordova-android" version=">=6.3.0"/>
+        <engine name="cordova-ios" version=">=4.5.0"/>
+    </engines>
+
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <feature name="TZNotification">
@@ -50,9 +56,8 @@
         <source-file src="src/android/GCMPlugin.java" target-dir="src/com/timezynk/cordova/notification" />
         <source-file src="src/android/InstanceIDListenerService.java" target-dir="src/com/timezynk/cordova/notification" />
 
-        <framework src="com.google.gms:google-services:3.1.1"/>
         <framework src="com.google.firebase:firebase-messaging:11.0.1"/>
-        <framework src="com.android.support:appcompat-v7:26.+"/>
+        <framework src="com.android.support:support-v13:26.+"/>
         <framework src="push.gradle" custom="true" type="gradleReference"/>
     </platform>
 
