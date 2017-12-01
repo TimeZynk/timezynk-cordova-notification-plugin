@@ -12,7 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class GCMPlugin extends CordovaPlugin {
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static String TAG = "GCMPlugin";
     private static GCMPlugin instance;
     private CallbackContext ongoingContext;
