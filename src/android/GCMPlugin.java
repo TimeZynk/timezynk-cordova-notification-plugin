@@ -70,15 +70,16 @@ public class GCMPlugin extends CordovaPlugin {
     }
 
     public void onRegistrationResponse(String regId) {
-        if (ongoingContext == null) {
-            Log.w(TAG, "ongoingContext is null when getting response");
+        if (this.ongoingContext == null) {
+            Log.w(TAG, "this.ongoingContext is null when getting response");
             return;
         }
-        this.onRegistrationResponse(regId, ongoingContext);
-        ongoingContext = null;
+        this.onRegistrationResponse(regId, this.ongoingContext);
+        this.ongoingContext = null;
     }
 
     public void onRegistrationResponse(String regId, CallbackContext context) {
+        Log.i(TAG, "Recieved new registrationId: " + regId);
         JSONObject response = new JSONObject();
         try {
             response.put("platform", "fcm");
@@ -103,7 +104,11 @@ public class GCMPlugin extends CordovaPlugin {
 
     private void getToken(CallbackContext context) {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        this.onRegistrationResponse(refreshedToken, context);
+        if (refreshedToken !== null) {
+            this.onRegistrationResponse(refreshedToken, context);
+        } else {
+            this.ongoingContext = context;
+        }
     }
 
     private void getPendingNotifications(CallbackContext context) {
