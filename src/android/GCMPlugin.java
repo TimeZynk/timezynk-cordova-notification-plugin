@@ -74,16 +74,19 @@ public class GCMPlugin extends CordovaPlugin {
             Log.w(TAG, "ongoingContext is null when getting response");
             return;
         }
+        this.onRegistrationResponse(regId, ongoingContext);
+        ongoingContext = null;
+    }
 
+    public void onRegistrationResponse(String regId, CallbackContext context) {
         JSONObject response = new JSONObject();
         try {
-            response.put("platform", "android");
+            response.put("platform", "fcm");
             response.put("registrationId", regId);
         } catch (JSONException e) {
             Log.w(TAG, "failed to construct JSON response", e);
         }
-        ongoingContext.success(response);
-        ongoingContext = null;
+        context.success(response);
     }
 
     public void onMessage(Bundle message) throws JSONException {
@@ -99,16 +102,8 @@ public class GCMPlugin extends CordovaPlugin {
     }
 
     private void getToken(CallbackContext context) {
-        Log.i(TAG, "Google Play Services OK, finding FCM token");
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        JSONObject response = new JSONObject();
-        try {
-            response.put("platform", "android");
-            response.put("registrationId", refreshedToken);
-        } catch (JSONException e) {
-            Log.w(TAG, "failed to construct JSON response", e);
-        }
-        context.success(response);
+        this.onRegistrationResponse(refreshedToken, context);
     }
 
     private void getPendingNotifications(CallbackContext context) {
