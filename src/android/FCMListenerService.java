@@ -1,8 +1,10 @@
 package com.timezynk.cordova.notification;
 
 import android.util.Log;
-import org.json.JSONException;
 import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
+import java.util.Map;
+import org.json.JSONException;
 
 public class FCMListenerService extends FirebaseMessagingService {
     private static final String TAG = "FCMListenerService";

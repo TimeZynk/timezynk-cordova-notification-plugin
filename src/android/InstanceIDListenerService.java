@@ -2,6 +2,7 @@ package com.timezynk.cordova.notification;
 
 import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class InstanceIDListenerService extends FirebaseInstanceIdService {
     private static final String TAG = "InstanceIDListenerService";
