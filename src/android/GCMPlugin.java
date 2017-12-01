@@ -1,14 +1,15 @@
 package com.timezynk.cordova.notification;
 
-import org.apache.cordova.*;
 import android.app.Activity;
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+import com.google.firebase.iid.FirebaseInstanceId;
+import java.util.Map;
+import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 public class GCMPlugin extends CordovaPlugin {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -89,13 +90,13 @@ public class GCMPlugin extends CordovaPlugin {
         context.success(response);
     }
 
-    public void onMessage(Bundle message) throws JSONException {
+    public void onMessage(Map message) throws JSONException {
         Log.v(TAG, "Recieved message: " + message + ", context: " + listenContext);
         if (listenContext == null) {
             return;
         }
 
-        JSONObject response = bundleToJSON(message);
+        JSONObject response = new JSONObject(message);
         PluginResult result = new PluginResult(PluginResult.Status.OK, response);
         result.setKeepCallback(true);
         listenContext.sendPluginResult(result);
