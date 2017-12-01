@@ -46,10 +46,9 @@
             </service>
         </config-file>
 
-        <source-file src="src/android/GCMIntentService.java" target-dir="src/com/timezynk/cordova/notification" />
-        <source-file src="src/android/GCMInstanceIDService.java" target-dir="src/com/timezynk/cordova/notification" />
-        <source-file src="src/android/GCMRegistrationService.java" target-dir="src/com/timezynk/cordova/notification" />
+        <source-file src="src/android/FCMListenerService.java" target-dir="src/com/timezynk/cordova/notification" />
         <source-file src="src/android/GCMPlugin.java" target-dir="src/com/timezynk/cordova/notification" />
+        <source-file src="src/android/InstanceIDListenerService.java" target-dir="src/com/timezynk/cordova/notification" />
 
         <framework src="com.google.firebase:firebase-messaging:9.0.0"/>
         <framework src="com.android.support:support-compat:27.0.2"/>
