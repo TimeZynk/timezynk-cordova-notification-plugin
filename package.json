@@ -1,5 +1,12 @@
 {
   "name": "timezynk-cordova-notification-plugin",
   "version": "1.1.2",
-  "private": true
+  "license": "UNLICENSED",
+  "private": false,
+  "description": "Native notifications for Android and iOS",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:TimeZynk/timezynk-cordova-notification-plugin.git"
+  },
+  "author": "Timezynk AB"
 }
