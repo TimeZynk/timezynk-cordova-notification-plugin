@@ -120,7 +120,7 @@ public class GCMPlugin extends CordovaPlugin {
                 Bundle extras = i.getExtras();
                 if (extras != null) {
                     JSONObject notification = bundleToJSON(extras);
-                    notification.put('launchNotification', true);
+                    notification.put("launchNotification", true);
                     response.put(notification);
                 }
             }
