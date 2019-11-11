@@ -125,6 +125,10 @@ NSMutableDictionary* convertPayload(NSDictionary* payload)
             type = @"repetition-deleted";
             break;
 
+        case 'O':
+            type = @"new-open-shifts";
+            break;
+
         default:
             type = @"unknown";
     }
