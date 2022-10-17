@@ -3,12 +3,12 @@
 
     <name>TimeZynk Notification Plugin</name>
     <description>Handle FCM and APNS notifications</description>
-    <license>Copyright TimeZynk AB 2018</license>
+    <license>Copyright TimeZynk AB 2022</license>
 
     <engines>
-        <engine name="cordova" version=">=7.0.2"/>
-        <engine name="cordova-android" version=">=6.2.3"/>
-        <engine name="cordova-ios" version=">=4.4.0"/>
+        <engine name="cordova" version=">=11.0.0"/>
+        <engine name="cordova-android" version=">=11.0.0"/>
+        <engine name="cordova-ios" version=">=6.2.0"/>
     </engines>
 
     <platform name="ios">
@@ -58,7 +58,8 @@
 
         <framework src="com.google.firebase:firebase-messaging:11.0.1"/>
         <framework src="com.android.support:support-v13:26.+"/>
-        <framework src="push.gradle" custom="true" type="gradleReference"/>
+        <preference name="GradlePluginGoogleServicesEnabled" value="true" />
+        <preference name="GradlePluginGoogleServicesVersion" value="4.3.8" />
     </platform>
 
 </plugin>
