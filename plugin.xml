@@ -30,6 +30,11 @@
     </platform>
 
     <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <preference name="GradlePluginGoogleServicesEnabled" value="true" />
+            <preference name="GradlePluginGoogleServicesVersion" value="4.2.0" />
+        </config-file>
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="TZNotification">
                 <param name="android-package" value="com.timezynk.cordova.notification.GCMPlugin"/>
@@ -58,8 +63,6 @@
 
         <framework src="com.google.firebase:firebase-messaging:11.0.1"/>
         <framework src="com.android.support:support-v13:26.+"/>
-        <preference name="GradlePluginGoogleServicesEnabled" value="true" />
-        <preference name="GradlePluginGoogleServicesVersion" value="4.3.8" />
     </platform>
 
 </plugin>
