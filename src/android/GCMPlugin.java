@@ -112,14 +112,14 @@ public class GCMPlugin extends CordovaPlugin {
                 public void onComplete(@NonNull Task<String> task) {
                     if (!task.isSuccessful()) {
                         Exception e = task.getException();
-                        Log.w(TAG, "Fetching FCM registration token failed", e.getException());
+                        Log.w(TAG, "Fetching FCM registration token failed", e);
                         context.error(e.getMessage());
                         return;
                     }
 
                     // Get new FCM registration token
                     String token = task.getResult();
-                    this.onRegistrationResponse(token, context);
+                    GCMPlugin.this.onRegistrationResponse(token, context);
                 }
             });
 
