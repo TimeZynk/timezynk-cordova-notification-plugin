@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="timezynk-cordova-notification-plugin" version="1.4.3" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="timezynk-cordova-notification-plugin" version="1.4.4" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <name>TimeZynk Notification Plugin</name>
     <description>Handle FCM and APNS notifications</description>
@@ -55,7 +55,8 @@
         <source-file src="src/android/FCMListenerService.java" target-dir="src/com/timezynk/cordova/notification" />
         <source-file src="src/android/GCMPlugin.java" target-dir="src/com/timezynk/cordova/notification" />
 
-        <framework src="com.google.firebase:firebase-messaging:23.1.0"/>
+        <framework src="platform('com.google.firebase:firebase-bom:31.0.1')"/>
+        <framework src="com.google.firebase:firebase-messaging"/>
         <framework src="androidx.annotation:annotation:1.5.0"/>
         <framework src="com.android.support:support-v13:28.0.0"/>
     </platform>
