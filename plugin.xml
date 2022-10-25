@@ -44,18 +44,10 @@
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <service
                 android:name="com.timezynk.cordova.notification.FCMListenerService"
-                android:exported="true"
+                android:exported="false"
             >
                 <intent-filter>
                     <action android:name="com.google.firebase.MESSAGING_EVENT" />
-                </intent-filter>
-            </service>
-            <service
-                android:name="com.timezynk.cordova.notification.InstanceIDListenerService"
-                android:exported="true"
-            >
-                <intent-filter>
-                    <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
                 </intent-filter>
             </service>
         </config-file>
@@ -64,7 +56,7 @@
         <source-file src="src/android/GCMPlugin.java" target-dir="src/com/timezynk/cordova/notification" />
         <source-file src="src/android/InstanceIDListenerService.java" target-dir="src/com/timezynk/cordova/notification" />
 
-        <framework src="com.google.firebase:firebase-messaging:11.0.1"/>
+        <framework src="com.google.firebase:firebase-messaging:23.1.0"/>
         <framework src="com.android.support:support-v13:26.+"/>
     </platform>
 

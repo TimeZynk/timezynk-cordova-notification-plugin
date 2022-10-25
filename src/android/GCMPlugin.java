@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.Map;
 import org.apache.cordova.*;
 import org.json.JSONArray;
@@ -103,12 +103,24 @@ public class GCMPlugin extends CordovaPlugin {
     }
 
     private void getToken(CallbackContext context) {
-        String token = FirebaseInstanceId.getInstance().getToken();
-        if (token != null) {
-            this.onRegistrationResponse(token, context);
-        } else {
-            this.ongoingContext = context;
-        }
+        FirebaseMessaging.getInstance().getToken()
+            .addOnCompleteListener(new OnCompleteListener<String>() {
+                @Override
+                public void onComplete(@NonNull Task<String> task) {
+                    if (!task.isSuccessful()) {
+                        Exception e = task.getException();
+                        Log.w(TAG, "Fetching FCM registration token failed", e.getException());
+                        context.error(e.getMessage());
+                        return;
+                    }
+
+                    // Get new FCM registration token
+                    String token = task.getResult();
+                    this.onRegistrationResponse(token, context);
+                }
+            });
+
+        this.ongoingContext = context;
     }
 
     private void getPendingNotifications(CallbackContext context) {
