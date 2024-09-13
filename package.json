@@ -1,6 +1,6 @@
 {
   "name": "timezynk-cordova-notification-plugin",
-  "version": "1.4.8",
+  "version": "1.4.9",
   "license": "UNLICENSED",
   "private": false,
   "description": "Native notifications for Android and iOS",
